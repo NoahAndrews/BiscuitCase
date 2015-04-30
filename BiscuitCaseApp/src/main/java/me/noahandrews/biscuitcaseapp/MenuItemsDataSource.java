@@ -197,6 +197,11 @@ public enum MenuItemsDataSource {
         database.delete(ITEMS_TABLE, COLUMN_ITEM_ID + " = " + id, null);
     }
 
+    public int deleteAllOrders(){
+        database.delete(ORDER_DETAILS_TABLE, null, null);
+        return database.delete(ORDER_SUMMARY_TABLE, "1", null); //passing 1 as the second argument makes it delete all rows and return the number of rows deleted.
+    }
+
 
     public ArrayList getItems(Category category) {
         ArrayList items = new ArrayList();
