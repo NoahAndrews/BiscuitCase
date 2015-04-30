@@ -2,6 +2,7 @@ package me.noahandrews.biscuitcaseapp;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -119,19 +120,18 @@ public enum MenuItemsDataSource {
         c.close();
     }
 
-
-    /*public void addCategory(String category, String section){
+    public void addCategory(Category category){
         ContentValues newCategory = new ContentValues();
-        newCategory.put(COLUMN_CATEGORY_NAME,category);
-        newCategory.put(COLUMN_CATEGORY_SECTION,section);
+        newCategory.put(COLUMN_CATEGORY_NAME, toCategoryName(category.getName()));
+        newCategory.put(COLUMN_CATEGORY_SECTION, category.getSection().sectionName);
         try {
             database.insertOrThrow(CATEGORIES_TABLE, null, newCategory);
-        } catch (Exception e) {
-            Log.e("Error inserting rows ", e.toString());
+        } catch(SQLException e){
+            Log.e("Err. inserting category", e.toString());
             e.printStackTrace();
         }
-        //menuCategories.add(category);
-    }*/
+        categories.add(category);
+    }
 
     public void addOrder(Order order) {
 
