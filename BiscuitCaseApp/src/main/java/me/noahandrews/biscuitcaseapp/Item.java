@@ -15,11 +15,13 @@ public class Item implements Serializable {
     public Item() {
     }
 
-    public Item(long id, String name, double price, Category category) {
+    public Item(long id, String name, double price, Category category, boolean hasLimitedQuantity, int quantityAvailable) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.category = category;
+        this.hasLimitedQuantity = hasLimitedQuantity;
+        this.quantityAvailable = quantityAvailable;
     }
 
     //Copy constructor
