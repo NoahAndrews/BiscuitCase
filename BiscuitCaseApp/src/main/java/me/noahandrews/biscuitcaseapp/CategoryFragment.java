@@ -29,7 +29,7 @@ public class CategoryFragment extends Fragment {
 
         //TODO This is a fragment, so it doesn't need a list of the Item objects.
         //TODO This fragment perhaps should be rewritten so that it takes a List of Items as a parameter, moving the database code maybe to the MenuFragment.
-        args.putSerializable("itemsArray", dataSource.getItemsFromCategory(category));
+        args.putSerializable("itemsArray", dataSource.getItems(category));
         dataSource.close();
 
         fragment.setArguments(args);
