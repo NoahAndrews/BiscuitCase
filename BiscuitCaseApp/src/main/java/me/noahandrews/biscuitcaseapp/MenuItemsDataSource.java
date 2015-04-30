@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 public enum MenuItemsDataSource {
@@ -167,6 +168,21 @@ public enum MenuItemsDataSource {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void deleteCategory(Category category) {
+        int id = category.getId();
+        database.delete(CATEGORIES_TABLE, COLUMN_CATEGORY_ID + " = " + id, null);
+
+        Iterator<Category> iterator = categories.iterator();
+        while(iterator.hasNext()){
+            Category c = iterator.next();
+            if(c.getId() == id){
+                iterator.remove();
+            }
+        }
+
+        Log.i("DatabaseInfo", "Category deleted: " + id);
     }
 
     public void deleteItem(Item item) {
