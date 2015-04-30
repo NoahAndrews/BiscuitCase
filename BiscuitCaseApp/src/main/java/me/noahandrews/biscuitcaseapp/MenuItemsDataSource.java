@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 public enum MenuItemsDataSource {
@@ -133,8 +134,14 @@ public enum MenuItemsDataSource {
         categories.add(category);
     }
 
-    public void addOrder(Order order) {
+    public void updateCategoryName(Category category){
+        ContentValues updatedCategory = new ContentValues();
+        updatedCategory.put(COLUMN_CATEGORY_NAME, toCategoryName(category.getName()));
+        database.update(CATEGORIES_TABLE, updatedCategory, COLUMN_CATEGORY_ID + " = " + category.getId(), null);
+        populateCategories();
+    }
 
+    public void addOrder(Order order) {
         //Create order summary record
         ContentValues newOrderSummary = new ContentValues();
         newOrderSummary.put(COLUMN_ORDERSUMMARY_CUSTOMER_NAME, order.getCustomerName());
@@ -169,10 +176,30 @@ public enum MenuItemsDataSource {
         }
     }
 
+    public void deleteCategory(Category category) {
+        int id = category.getId();
+        database.delete(CATEGORIES_TABLE, COLUMN_CATEGORY_ID + " = " + id, null);
+
+        Iterator<Category> iterator = categories.iterator();
+        while(iterator.hasNext()){
+            Category c = iterator.next();
+            if(c.getId() == id){
+                iterator.remove();
+            }
+        }
+
+        Log.i("DatabaseInfo", "Category deleted: " + id);
+    }
+
     public void deleteItem(Item item) {
         long id = item.getId();
         Log.i("helper", "Item deleted: " + id); //TODO Specify which database and table the item came from
         database.delete(ITEMS_TABLE, COLUMN_ITEM_ID + " = " + id, null);
+    }
+
+    public int deleteAllOrders(){
+        database.delete(ORDER_DETAILS_TABLE, null, null);
+        return database.delete(ORDER_SUMMARY_TABLE, "1", null); //passing 1 as the second argument makes it delete all rows and return the number of rows deleted.
     }
 
 
@@ -195,9 +222,12 @@ public enum MenuItemsDataSource {
     }
 
     private void populateCategories() {
-        ArrayList categories = new ArrayList();
-        if(database == null) {
-            categories = null;
+        if(database == null) return;
+        if(categories == null){
+            categories = new ArrayList();
+        }
+        else{
+            categories.clear();
         }
         Cursor cursor = database.query(CATEGORIES_TABLE, readableColumnsCategoriesTable, null, null, null, null, null);
         cursor.moveToFirst();
@@ -207,7 +237,6 @@ public enum MenuItemsDataSource {
             cursor.moveToNext();
         }
         cursor.close();
-        this.categories = categories;
     }
 
     private Item cursorToItem(Cursor cursor) {
