@@ -15,12 +15,11 @@ public enum MenuItemsDataSource {
 
     public static final String[] MENU_CATEGORIES_SEED = {"Appetizers", "Entrees", "Beverages", "Soups and Salads", "Sides", "Desserts"};
     public static final String DB_NAME = "menu.db";
-    public static final int DB_VERSION = 17; // If this is incremented, we should really add code
-    public static final String MENU_ITEMS_TABLE = "Menu_Items";
-    //Columns for MenuItems table
+    public static final int DB_VERSION = 18; // If this is incremented, we should add code to onUpgrade that will maintain the state of the DB.
+    public static final String ITEMS_TABLE = "Items";
+    //Columns for Items table
     public static final String COLUMN_ITEM_ID = "ID"; //The name of the field containing the item's unique ID
     public static final String COLUMN_ITEM_NAME = "Item_Name"; //The name of the field containing the item's name
-    // to onUpgrade that will maintain the items entered.
     public static final String COLUMN_ITEM_PRICE = "Item_Price";
     public static final String COLUMN_ITEM_CATEGORY_ID = "Category_ID";
     public static final String CATEGORIES_TABLE = "Categories";
@@ -98,7 +97,7 @@ public enum MenuItemsDataSource {
         newItem.put(COLUMN_ITEM_PRICE, item.getPrice());
         newItem.put(COLUMN_ITEM_CATEGORY_ID, item.getCategory().getName());
         try {
-            database.insertOrThrow(MENU_ITEMS_TABLE, null, newItem);
+            database.insertOrThrow(ITEMS_TABLE, null, newItem);
         } catch(Exception e) {
             Log.e("Error inserting rows ", e.toString());
             e.printStackTrace();
@@ -164,7 +163,7 @@ public enum MenuItemsDataSource {
     public void deleteItem(Item item) {
         long id = item.getId();
         Log.i("helper", "Item deleted: " + id); // Specify which database and table the item came from
-        database.delete(MENU_ITEMS_TABLE, COLUMN_ITEM_ID + " = " + id, null);
+        database.delete(ITEMS_TABLE, COLUMN_ITEM_ID + " = " + id, null);
     }
 
 
@@ -173,7 +172,7 @@ public enum MenuItemsDataSource {
 
         if(database == null) Log.w("WARNING", "database object is null.");
 
-        Cursor cursor = database.query(MENU_ITEMS_TABLE, readableColumnsItemsTable, COLUMN_ITEM_CATEGORY_ID + " = '" + category.getId() + "'", null, null, null, null);
+        Cursor cursor = database.query(ITEMS_TABLE, readableColumnsItemsTable, COLUMN_ITEM_CATEGORY_ID + " = '" + category.getId() + "'", null, null, null, null);
 
 
         cursor.moveToFirst();
@@ -227,7 +226,7 @@ public enum MenuItemsDataSource {
         public void onCreate(SQLiteDatabase database) {
             Log.d("MenuItemsDataSource", "Database is being created");
             String CREATE_MENU_TABLE = "CREATE TABLE "
-                    + MENU_ITEMS_TABLE + " ("
+                    + ITEMS_TABLE + " ("
                     + COLUMN_ITEM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + COLUMN_ITEM_NAME + " TEXT NOT NULL, "
                     + COLUMN_ITEM_PRICE + " FLOAT NOT NULL,"
@@ -281,7 +280,7 @@ public enum MenuItemsDataSource {
             Log.w(SQLHelper.class.getName(), "Upgrading database from version " + oldVersion
                     + " to " + newVersion + ". All data is being deleted.");
 
-            database.execSQL("DROP TABLE IF EXISTS " + MENU_ITEMS_TABLE);
+            database.execSQL("DROP TABLE IF EXISTS " + ITEMS_TABLE);
             database.execSQL("DROP TABLE IF EXISTS " + CATEGORIES_TABLE);
             database.execSQL("DROP TABLE IF EXISTS " + ORDER_SUMMARY_TABLE);
             database.execSQL("DROP TABLE IF EXISTS " + ORDER_DETAILS_TABLE);
