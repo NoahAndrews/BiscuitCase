@@ -1,5 +1,7 @@
 package me.noahandrews.biscuitcaseapp;
 
+import android.support.annotation.Nullable;
+
 import java.io.Serializable;
 
 public class Item implements Serializable {
@@ -15,11 +17,13 @@ public class Item implements Serializable {
     public Item() {
     }
 
-    public Item(long id, String name, double price, Category category) {
+    public Item(long id, String name, double price, Category category, boolean hasLimitedQuantity, @Nullable int quantityAvailable) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.category = category;
+        this.hasLimitedQuantity = hasLimitedQuantity;
+        this.quantityAvailable = quantityAvailable;
     }
 
     //Copy constructor
@@ -55,6 +59,18 @@ public class Item implements Serializable {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public boolean isQuantityLimited() {
+        return hasLimitedQuantity;
+    }
+
+    public int getQuantityAvailable() {
+        return quantityAvailable;
+    }
+
+    public void setQuantityAvailable(int quantityAvailable) {
+        this.quantityAvailable = quantityAvailable;
     }
 
     public int getQuantityDesired() {

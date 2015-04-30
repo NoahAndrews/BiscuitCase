@@ -16,32 +16,39 @@ public enum MenuItemsDataSource {
     public static final String[] MENU_CATEGORIES_SEED = {"Appetizers", "Entrees", "Beverages", "Soups and Salads", "Sides", "Desserts"};
     public static final String DB_NAME = "menu.db";
     public static final int DB_VERSION = 18; // If this is incremented, we should add code to onUpgrade that will maintain the state of the DB.
+
     public static final String ITEMS_TABLE = "Items";
     //Columns for Items table
     public static final String COLUMN_ITEM_ID = "ID"; //The name of the field containing the item's unique ID
     public static final String COLUMN_ITEM_NAME = "Item_Name"; //The name of the field containing the item's name
     public static final String COLUMN_ITEM_PRICE = "Item_Price";
     public static final String COLUMN_ITEM_CATEGORY_ID = "Category_ID";
+    public static final String COLUMN_ITEM_IS_LIMITED = "Is_Limited";
+    public static final String COLUMN_ITEM_QUANTITY = "Quantity";
+
     public static final String CATEGORIES_TABLE = "Categories";
     //Columns for Categories table
     public static final String COLUMN_CATEGORY_ID = "ID";
     public static final String COLUMN_CATEGORY_NAME = "Category_Name";
     public static final String COLUMN_CATEGORY_SECTION = "Category_Section";
+
     public static final String ORDER_SUMMARY_TABLE = "Order_Summaries";
     //Columns for order summaries table
     public static final String COLUMN_ORDERSUMMARY_ID = "ID";
     public static final String COLUMN_ORDERSUMMARY_CUSTOMER_NAME = "Customer_Name";
     public static final String COLUMN_ORDERSUMMARY_TIMESTAMP = "Order_Timestamp";
+
     public static final String ORDER_DETAILS_TABLE = "Order_Details";
     //Columns for order details table
     public static final String COLUMN_ORDERDETAILS_ORDERID = "Order_ID";
     public static final String COLUMN_ORDERDETAILS_ITEMID = "Item_ID";
     public static final String COLUMN_ORDERDETAILS_ITEMQUANTITY = "Item_Quantity";
     public static final String COLUMN_ORDERDETAILS_ITEMPRICE = "Item_Price";
+
     SQLHelper helper;
     SQLiteDatabase database;
     private boolean isOpened = false;
-    private String[] readableColumnsItemsTable = {COLUMN_ITEM_ID, COLUMN_ITEM_NAME, COLUMN_ITEM_PRICE, COLUMN_ITEM_CATEGORY_ID};
+    private String[] readableColumnsItemsTable = {COLUMN_ITEM_ID, COLUMN_ITEM_NAME, COLUMN_ITEM_PRICE, COLUMN_ITEM_CATEGORY_ID, COLUMN_ITEM_IS_LIMITED, COLUMN_ITEM_QUANTITY};
     private String[] readableColumnsCategoriesTable = {COLUMN_CATEGORY_ID, COLUMN_CATEGORY_NAME, COLUMN_CATEGORY_SECTION};
     private ArrayList<Category> categories;
 
@@ -96,6 +103,8 @@ public enum MenuItemsDataSource {
         newItem.put(COLUMN_ITEM_NAME, item.getName());
         newItem.put(COLUMN_ITEM_PRICE, item.getPrice());
         newItem.put(COLUMN_ITEM_CATEGORY_ID, item.getCategory().getName());
+        newItem.put(COLUMN_ITEM_IS_LIMITED, item.isQuantityLimited() ? 1 : 0);
+        newItem.put(COLUMN_ITEM_QUANTITY, item.getQuantityAvailable());
         try {
             database.insertOrThrow(ITEMS_TABLE, null, newItem);
         } catch(Exception e) {
@@ -162,7 +171,7 @@ public enum MenuItemsDataSource {
 
     public void deleteItem(Item item) {
         long id = item.getId();
-        Log.i("helper", "Item deleted: " + id); // Specify which database and table the item came from
+        Log.i("helper", "Item deleted: " + id); //TODO Specify which database and table the item came from
         database.delete(ITEMS_TABLE, COLUMN_ITEM_ID + " = " + id, null);
     }
 
@@ -207,7 +216,9 @@ public enum MenuItemsDataSource {
         float price = cursor.getFloat(2);
         int categoryId = cursor.getInt(3);
         Category category = categories.get(categoryId); //This works because every category's index in the categories ArrayList is equal to its category ID.
-        Item item = new Item(id, name, price, category);
+        boolean isLimited = (cursor.getInt(4) == 1);
+        int quantity = cursor.getInt(5);
+        Item item = new Item(id, name, price, category, isLimited, quantity);
         return item;
     }
 
@@ -225,13 +236,14 @@ public enum MenuItemsDataSource {
         @Override
         public void onCreate(SQLiteDatabase database) {
             Log.d("MenuItemsDataSource", "Database is being created");
-            String CREATE_MENU_TABLE = "CREATE TABLE "
+            String CREATE_ITEMS_TABLE = "CREATE TABLE "
                     + ITEMS_TABLE + " ("
                     + COLUMN_ITEM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + COLUMN_ITEM_NAME + " TEXT NOT NULL, "
                     + COLUMN_ITEM_PRICE + " FLOAT NOT NULL,"
-                    + COLUMN_ITEM_CATEGORY_ID + " INTEGER NOT NULL);"; //If this structure changes, DB_VERSION should be incremented.
-
+                    + COLUMN_ITEM_CATEGORY_ID + " INTEGER NOT NULL, "
+                    + COLUMN_ITEM_IS_LIMITED + " INTEGER DEFAULT 0, "
+                    + COLUMN_ITEM_QUANTITY + " INTEGER);"; //If this structure changes, DB_VERSION should be incremented.
 
             String CREATE_CATEGORIES_TABLE = "CREATE TABLE "
                     + CATEGORIES_TABLE + " ("
@@ -253,7 +265,7 @@ public enum MenuItemsDataSource {
                     + COLUMN_ORDERDETAILS_ITEMPRICE + " FLOAT);";
 
             database.execSQL(CREATE_CATEGORIES_TABLE);
-            database.execSQL(CREATE_MENU_TABLE);
+            database.execSQL(CREATE_ITEMS_TABLE);
             database.execSQL(CREATE_ORDER_SUMMARY_TABLE);
             database.execSQL(CREATE_ORDER_DETAILS_TABLE);
 
@@ -262,10 +274,10 @@ public enum MenuItemsDataSource {
             for(String currentCategory : MENU_CATEGORIES_SEED) {
                 currentCategory = toCategoryName(currentCategory);
                 if(isFirstTime) {
-                    ADD_CATEGORY = "INSERT INTO " + CATEGORIES_TABLE + " VALUES(0, '" + currentCategory + "', 'menu')";
+                    ADD_CATEGORY = "INSERT INTO " + CATEGORIES_TABLE + " VALUES(0, '" + currentCategory + "', 'Menu')";
                     isFirstTime = false;
                 } else {
-                    ADD_CATEGORY = "INSERT INTO " + CATEGORIES_TABLE + " VALUES(null, '" + currentCategory + "', 'menu')";
+                    ADD_CATEGORY = "INSERT INTO " + CATEGORIES_TABLE + " VALUES(null, '" + currentCategory + "', 'Menu')";
                 }
 
 
