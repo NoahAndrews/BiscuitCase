@@ -30,27 +30,6 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         return CategoryFragment.newInstance(categories.get(position));
     }
 
-    @Deprecated
-    public void clearTotals() {
-        FragmentTransaction transaction = fm.beginTransaction();
-        ArrayList<Fragment> fragments = (ArrayList<Fragment>) fm.getFragments();
-        for(int i = 0; i < fragments.size(); i++) {
-            Fragment fragment = fragments.get(i);
-//            Bundle args = fragment.getArguments();
-//            ArrayList items = (ArrayList)args.getSerializable("itemsArray");//Retrieve list of items in the fragment
-//            for(int j = 0; j < items.size(); j++){
-//                ItemMenu item = (ItemMenu)items.get(j);
-//                item.setQuantityDesired(0);
-//            }
-//            args.putSerializable("itemsArray",(Serializable) items);
-//            fragment.setArguments(args);
-//            if(fragment.getView() != null)
-//                fragment.getView().invalidate();
-
-            transaction.replace(R.id.pager, fragment);//Someone online said this doesn't do the job.
-        }
-    }
-
     public CharSequence getPageTitle(int position) {
         return Titles[position];
     }
