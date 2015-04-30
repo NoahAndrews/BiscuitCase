@@ -131,6 +131,10 @@ public enum MenuItemsDataSource {
             Log.e("Err. inserting category", e.toString());
             e.printStackTrace();
         }
+        Cursor c = database.rawQuery("SELECT * FROM tablename ORDER BY column DESC LIMIT 1;",null);  //The last_insert_rowid SQL function won't work because Category IDs start from zero.
+        c.moveToFirst();
+        int id = c.getInt(0);
+        category.setId(id);
         categories.add(category);
     }
 
