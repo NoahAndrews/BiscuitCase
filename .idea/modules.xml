@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/BiscuitCaseApp/BiscuitCaseApp.iml" filepath="$PROJECT_DIR$/BiscuitCaseApp/BiscuitCaseApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BiscuitCaseLibrary/BiscuitCaseLibrary.iml" filepath="$PROJECT_DIR$/BiscuitCaseLibrary/BiscuitCaseLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BiscuitCaseManagement/BiscuitCaseManagement.iml" filepath="$PROJECT_DIR$/BiscuitCaseManagement/BiscuitCaseManagement.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HappyBurger.iml" filepath="$PROJECT_DIR$/HappyBurger.iml" />
+    </modules>
+  </component>
+</project>
+

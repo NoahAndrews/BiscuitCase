@@ -1,0 +1,48 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              tools:context="me.noahandrews.biscuitcaseapp.CheckoutActivity$PlaceholderFragment"
+              android:orientation="vertical"
+              android:background="#ff607681">
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/order"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="0dp"
+        android:layout_margin="0dp"
+        android:layout_weight="1"/>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_marginLeft="15dp"
+            android:layout_gravity="center"
+            android:text="Name"/>
+
+        <EditText
+            android:id="@+id/name_field"
+            android:layout_width="match_parent"
+            android:layout_height="60sp"
+            android:layout_margin="15dp"
+            android:inputType="textPersonName"
+            android:ems="10"
+            />
+    </LinearLayout>
+
+    <Space
+        android:layout_width="0px"
+        android:layout_height="32dp"
+        />
+
+
+</LinearLayout>

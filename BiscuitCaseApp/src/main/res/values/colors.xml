@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="BottomBackground">#ff3b3b3b</color> <!--Dark -->
+    <color name="DarkButtonBackground">#ff6d6d6d</color>        <!--Somewhat lighter -->
+    <color name="Light">#fff3f3f3</color>
+    <color name="Green">#ff2dae38</color>
+    <color name="Red">#ffdd3318</color>
+
+    <color name="primary">#F44336</color>
+    <color name="primary_dark">#D32F2F</color>
+    <color name="accent">#CDDC39</color>
+    <color name="text_primary">#212121</color>
+    <color name="icon">#FFFFFF</color>
+
+</resources>
