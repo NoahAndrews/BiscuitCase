@@ -168,7 +168,7 @@ public enum MenuItemsDataSource {
     }
 
 
-    public ArrayList getItemsFromCategory(Category category) {
+    public ArrayList getItems(Category category) {
         ArrayList items = new ArrayList();
 
         if(database == null) Log.w("WARNING", "database object is null.");
