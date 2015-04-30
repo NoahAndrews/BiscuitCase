@@ -217,9 +217,12 @@ public enum MenuItemsDataSource {
     }
 
     private void populateCategories() {
-        ArrayList categories = new ArrayList();
-        if(database == null) {
-            categories = null;
+        if(database == null) return;
+        if(categories == null){
+            categories = new ArrayList();
+        }
+        else{
+            categories.clear();
         }
         Cursor cursor = database.query(CATEGORIES_TABLE, readableColumnsCategoriesTable, null, null, null, null, null);
         cursor.moveToFirst();
@@ -229,7 +232,6 @@ public enum MenuItemsDataSource {
             cursor.moveToNext();
         }
         cursor.close();
-        this.categories = categories;
     }
 
     private Item cursorToItem(Cursor cursor) {
