@@ -134,8 +134,14 @@ public enum MenuItemsDataSource {
         categories.add(category);
     }
 
-    public void addOrder(Order order) {
+    public void updateCategoryName(Category category){
+        ContentValues updatedCategory = new ContentValues();
+        updatedCategory.put(COLUMN_CATEGORY_NAME, toCategoryName(category.getName()));
+        database.update(CATEGORIES_TABLE, updatedCategory, COLUMN_CATEGORY_ID + " = " + category.getId(), null);
+        populateCategories();
+    }
 
+    public void addOrder(Order order) {
         //Create order summary record
         ContentValues newOrderSummary = new ContentValues();
         newOrderSummary.put(COLUMN_ORDERSUMMARY_CUSTOMER_NAME, order.getCustomerName());
