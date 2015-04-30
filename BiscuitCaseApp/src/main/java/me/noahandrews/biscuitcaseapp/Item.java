@@ -26,6 +26,14 @@ public class Item implements Serializable {
         this.quantityAvailable = quantityAvailable;
     }
 
+    public Item(String name, double price, Category category, boolean hasLimitedQuantity, @Nullable int quantityAvailable) {
+        this.name = name;
+        this.price = price;
+        this.category = category;
+        this.hasLimitedQuantity = hasLimitedQuantity;
+        this.quantityAvailable = quantityAvailable;
+    }
+
     //Copy constructor
     public Item(Item original) {
         this.id = original.id;
