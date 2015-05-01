@@ -1,19 +1,24 @@
 package me.noahandrews.biscuitcasemanagement.app;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
+import android.widget.EditText;
+import com.software.shell.fab.ActionButton;
 import me.noahandrews.biscuitcaselibrary.Category;
 import me.noahandrews.biscuitcaselibrary.ItemsDataSource;
 
@@ -55,6 +60,24 @@ public class CategoryActivity extends AppCompatActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        ActionButton addCategoryButton = (ActionButton)findViewById(R.id.actionButton);
+        addCategoryButton.setImageResource(R.drawable.fab_plus_icon);
+        addCategoryButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                AlertDialog.Builder dialog = new AlertDialog.Builder(CategoryActivity.this);
+                dialog.setTitle("Add new category");
+                dialog.setMessage("Enter a name.");
+                final EditText nameField = new EditText(CategoryActivity.this);
+                nameField.setInputType(InputType.TYPE_CLASS_TEXT);
+                dialog.setView(nameField);
+                dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+            }
+        });
     }
     
     @Override
