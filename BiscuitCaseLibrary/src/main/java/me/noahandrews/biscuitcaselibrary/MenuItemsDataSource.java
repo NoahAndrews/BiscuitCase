@@ -1,4 +1,4 @@
-package me.noahandrews.biscuitcaseapp;
+package me.noahandrews.biscuitcaselibrary;
 
 import android.content.ContentValues;
 import android.database.Cursor;

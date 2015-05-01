@@ -1,10 +1,6 @@
-package me.noahandrews.biscuitcaseapp;
+package me.noahandrews.biscuitcaselibrary;
 
 import java.util.ArrayList;
-
-interface OrderResetListener {
-    void onOrderReset();
-}
 
 public class OrderResetHelper {
     static ArrayList<OrderResetListener> listeners = new ArrayList<>();
@@ -17,5 +13,9 @@ public class OrderResetHelper {
         for(OrderResetListener listener : listeners) {
             listener.onOrderReset();
         }
+    }
+
+    public interface OrderResetListener {
+        void onOrderReset();
     }
 }

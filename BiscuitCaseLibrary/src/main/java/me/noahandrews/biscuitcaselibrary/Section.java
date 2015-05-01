@@ -1,4 +1,4 @@
-package me.noahandrews.biscuitcaseapp;
+package me.noahandrews.biscuitcaselibrary;
 
 public enum Section {
     MENU("menu"), STORE("store");

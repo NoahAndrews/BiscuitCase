@@ -1,4 +1,4 @@
-package me.noahandrews.biscuitcaseapp;
+package me.noahandrews.biscuitcaselibrary;
 
 import android.app.Application;
 import android.content.Context;

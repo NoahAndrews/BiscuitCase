@@ -9,6 +9,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import me.noahandrews.biscuitcaselibrary.Category;
+import me.noahandrews.biscuitcaselibrary.MenuItemsDataSource;
+import me.noahandrews.biscuitcaselibrary.Section;
 
 import java.util.ArrayList;
 

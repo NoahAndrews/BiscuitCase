@@ -1,4 +1,4 @@
-package me.noahandrews.biscuitcaseapp;
+package me.noahandrews.biscuitcaselibrary;
 
 import java.io.Serializable;
 import java.util.ArrayList;

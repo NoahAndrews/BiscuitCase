@@ -3,7 +3,8 @@ package me.noahandrews.biscuitcaseapp;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
+import me.noahandrews.biscuitcaselibrary.Category;
+import me.noahandrews.biscuitcaselibrary.MenuItemsDataSource;
 
 import java.util.ArrayList;
 
