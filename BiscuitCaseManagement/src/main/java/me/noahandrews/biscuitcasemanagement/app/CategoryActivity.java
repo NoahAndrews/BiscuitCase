@@ -59,11 +59,7 @@ public class CategoryActivity extends AppCompatActivity
     
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
+        // launch a new activity
     }
     
     public void onSectionAttached(int number) {
