@@ -15,9 +15,11 @@ import android.view.View;
 import android.widget.*;
 import com.facebook.stetho.Stetho;
 import com.software.shell.fab.ActionButton;
+import me.noahandrews.biscuitcaselibrary.*;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, ShoppingFragment.OnFragmentInteractionListener,
-        CheckoutFragment.OnFragmentInteractionListener, OrderResetListener, ItemListAdapter.OnItemInteractionListener {
+        CheckoutFragment.OnFragmentInteractionListener, OrderResetHelper.OrderResetListener, ItemListAdapter.OnItemInteractionListener {
+
 
     public static final String WARNING_TAG = "BiscuitCaseWARNING";
     public static final String DEBUG_TAG = "BiscuitCaseDEBUG";

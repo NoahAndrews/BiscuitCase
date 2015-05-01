@@ -8,6 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import me.noahandrews.biscuitcaselibrary.Category;
+import me.noahandrews.biscuitcaselibrary.Item;
+import me.noahandrews.biscuitcaselibrary.ItemListAdapter;
+import me.noahandrews.biscuitcaselibrary.MenuItemsDataSource;
 
 import java.util.ArrayList;
 
