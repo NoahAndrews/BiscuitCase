@@ -117,7 +117,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemHo
                 quantityPrompt.setTitle("Quantity");
                 quantityPrompt.setMessage("How many items?");
                 final EditText newQuantityField = new EditText(context);
-                newQuantityField.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_CLASS_NUMBER);
+                newQuantityField.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_CLASS_NUMBER); //TODO try removing TYPE_CLASS_TEXT
                 newQuantityField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                     @Override
                     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
