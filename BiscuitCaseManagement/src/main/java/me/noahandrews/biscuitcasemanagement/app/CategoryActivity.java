@@ -6,12 +6,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
+import me.noahandrews.biscuitcaselibrary.Category;
+import me.noahandrews.biscuitcaselibrary.ItemsDataSource;
+
+import java.util.ArrayList;
 
 
 public class CategoryActivity extends AppCompatActivity
@@ -26,11 +32,20 @@ public class CategoryActivity extends AppCompatActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+    ArrayList<Category> categories;
+    ItemsDataSource dataSource;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
+        dataSource = ItemsDataSource.INSTANCE;
+        dataSource.open();
+        categories = dataSource.getCategories();
+
+        RecyclerView list = (RecyclerView)findViewById(R.id.categoryList);
+        list.setLayoutManager(new LinearLayoutManager(this));
+        list.setAdapter(new CategoryListAdapter(categories));
         
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
