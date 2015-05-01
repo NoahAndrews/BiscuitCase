@@ -104,5 +104,6 @@
     <orderEntry type="library" exported="" name="jsr305-2.0.1" level="project" />
     <orderEntry type="library" exported="" name="cardview-v7-22.0.0" level="project" />
     <orderEntry type="library" exported="" name="fab-1.0.5" level="project" />
+    <orderEntry type="module" module-name="BiscuitCaseLibrary" />
   </component>
 </module>
