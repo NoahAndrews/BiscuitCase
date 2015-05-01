@@ -3,7 +3,7 @@ package me.noahandrews.biscuitcaselibrary;
 public enum Section {
     MENU("menu"), STORE("store");
 
-    final String sectionName;
+    public final String sectionName;
 
     Section(String name) {
         this.sectionName = name;
