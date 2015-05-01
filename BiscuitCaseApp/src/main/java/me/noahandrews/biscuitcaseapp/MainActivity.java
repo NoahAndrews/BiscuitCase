@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     final LayoutStateHolder layoutStateHolder = new LayoutStateHolder();
     Order currentOrder;
-    MenuItemsDataSource dataSource;
+    ItemsDataSource dataSource;
     ShoppingFragment menuFragment;
     ShoppingFragment storeFragment;
     CheckoutFragment checkoutFragment;
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sectionChooser.setAdapter(spinnerAdapter);
 
-        dataSource = MenuItemsDataSource.INSTANCE;
+        dataSource = ItemsDataSource.INSTANCE;
         dataSource.open();
 
         ItemListAdapter.addListener(this);

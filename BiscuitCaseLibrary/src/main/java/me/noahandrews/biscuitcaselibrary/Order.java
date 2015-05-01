@@ -66,8 +66,8 @@ public class Order implements Serializable {
         timestamp = new Date(System.currentTimeMillis());
 
         //TODO make this section a function
-        MenuItemsDataSource dataSource;
-        dataSource = MenuItemsDataSource.INSTANCE;
+        ItemsDataSource dataSource;
+        dataSource = ItemsDataSource.INSTANCE;
         if(!dataSource.isOpened()) {
             dataSource.open();
         }

@@ -28,7 +28,7 @@ public class Category implements Serializable {
     }
 
     public void setName(String name) {
-        name = MenuItemsDataSource.toCategoryName(name);
+        name = ItemsDataSource.toCategoryName(name);
         this.name = name;
     }
 

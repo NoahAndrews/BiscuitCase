@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import me.noahandrews.biscuitcaselibrary.Category;
 import me.noahandrews.biscuitcaselibrary.Item;
 import me.noahandrews.biscuitcaselibrary.ItemListAdapter;
-import me.noahandrews.biscuitcaselibrary.MenuItemsDataSource;
+import me.noahandrews.biscuitcaselibrary.ItemsDataSource;
 
 import java.util.ArrayList;
 
@@ -23,8 +23,8 @@ public class CategoryFragment extends Fragment {
     public static CategoryFragment newInstance(Category category) {
         CategoryFragment fragment = new CategoryFragment();
         Bundle args = new Bundle();
-        MenuItemsDataSource dataSource;
-        dataSource = MenuItemsDataSource.INSTANCE;
+        ItemsDataSource dataSource;
+        dataSource = ItemsDataSource.INSTANCE;
         if(!dataSource.isOpened()) {
             dataSource.open();
         }
