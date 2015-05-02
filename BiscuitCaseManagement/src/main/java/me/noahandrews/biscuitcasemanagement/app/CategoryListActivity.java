@@ -1,10 +1,13 @@
 package me.noahandrews.biscuitcasemanagement.app;
 
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,8 +17,9 @@ import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.support.v4.widget.DrawerLayout;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import com.software.shell.fab.ActionButton;
 import me.noahandrews.biscuitcaselibrary.Category;
 import me.noahandrews.biscuitcaselibrary.ItemsDataSource;
@@ -30,23 +34,56 @@ public class CategoryListActivity extends AppCompatActivity {
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
-    ArrayList<Category> categories;
-    ItemsDataSource dataSource;
-    
+    private CharSequence mDrawerTitle;
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private ListView mDrawerList;
+
+    private ArrayList<Category> mCategories;
+    private ItemsDataSource mDataSource;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_list);
-        dataSource = ItemsDataSource.HOST_INSTANCE;
-        dataSource.open();
-        categories = dataSource.getCategories();
+
+        mDataSource = ItemsDataSource.HOST_INSTANCE;
+        if(!mDataSource.isOpened()){
+            mDataSource.open();
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        mDrawerList = (ListView)findViewById(R.id.nav_drawer_list);
+        mDrawerList.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.NavSections)));
+
+        mTitle = mDrawerTitle = getTitle();
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                getSupportActionBar().setTitle(mTitle);
+                invalidateOptionsMenu();
+            }
+
+            public void onDrawerOpened(View drawerView){
+                super.onDrawerOpened(drawerView);
+                getSupportActionBar().setTitle(mDrawerTitle);
+                invalidateOptionsMenu();
+            }
+        };
+
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        mCategories = mDataSource.getCategories();
+
         RecyclerView list = (RecyclerView)findViewById(R.id.categoryList);
         list.setLayoutManager(new LinearLayoutManager(this));
-        list.setAdapter(new CategoryListAdapter(categories));
+        list.setAdapter(new CategoryListAdapter(mCategories));
 
         Drawable plusIcon = getResources().getDrawable(R.drawable.fab_plus_icon); //must continue to use deprecated method for now. The replacement requires API 21+
         Drawable plusIconTinted = DrawableCompat.wrap(plusIcon);
@@ -65,7 +102,7 @@ public class CategoryListActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Category newCategory = new Category(nameField.getText().toString(), Section.MENU);
-                        dataSource.addCategory(newCategory);
+                        mDataSource.addCategory(newCategory);
                     }
                 });
                 dialog.setNegativeButton("Cancel",null);
@@ -73,9 +110,27 @@ public class CategoryListActivity extends AppCompatActivity {
             }
         });
     }
-    
 
-    
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+
     public void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
