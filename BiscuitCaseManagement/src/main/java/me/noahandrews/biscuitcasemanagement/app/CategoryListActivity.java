@@ -29,10 +29,6 @@ import java.util.ArrayList;
 
 
 public class CategoryListActivity extends AppCompatActivity {
-
-    /**
-     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
-     */
     private CharSequence mTitle;
     private CharSequence mDrawerTitle;
     private DrawerLayout mDrawerLayout;
@@ -131,14 +127,6 @@ public class CategoryListActivity extends AppCompatActivity {
     }
 
 
-    public void restoreActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(mTitle);
-    }
-    
-    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if(true/*if the drawer is not open*/) {
@@ -146,7 +134,6 @@ public class CategoryListActivity extends AppCompatActivity {
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
             getMenuInflater().inflate(R.menu.database, menu);
-            restoreActionBar();
             return true;
         }
         return super.onCreateOptionsMenu(menu);
