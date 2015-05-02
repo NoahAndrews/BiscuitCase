@@ -9,10 +9,14 @@ public class Category implements Serializable {
     private String name;
     private Section section;
 
-    public Category(int id, @NonNull String name, Section section) {
-        this.id = id;
+    public Category(String name, Section section){
         this.name = name;
         this.section = section;
+    }
+
+    public Category(int id, @NonNull String name, Section section) {
+        this(name, section);
+        this.id = id;
     }
 
     public int getId() {
