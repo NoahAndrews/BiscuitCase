@@ -24,14 +24,8 @@ import me.noahandrews.biscuitcaselibrary.Section;
 import java.util.ArrayList;
 
 
-public class CategoryListActivity extends AppCompatActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
-    
-    /**
-     * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
-     */
-    private NavigationDrawerFragment mNavigationDrawerFragment;
-    
+public class CategoryListActivity extends AppCompatActivity {
+
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
@@ -53,15 +47,6 @@ public class CategoryListActivity extends AppCompatActivity
         RecyclerView list = (RecyclerView)findViewById(R.id.categoryList);
         list.setLayoutManager(new LinearLayoutManager(this));
         list.setAdapter(new CategoryListAdapter(categories));
-        
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle();
-        
-        // Set up the drawer.
-        mNavigationDrawerFragment.setUp(
-                R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
 
         Drawable plusIcon = getResources().getDrawable(R.drawable.fab_plus_icon); //must continue to use deprecated method for now. The replacement requires API 21+
         Drawable plusIconTinted = DrawableCompat.wrap(plusIcon);
@@ -115,7 +100,7 @@ public class CategoryListActivity extends AppCompatActivity
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if(!mNavigationDrawerFragment.isDrawerOpen()) {
+        if(true/*if the drawer is not open*/) {
             // Only show items in the action bar relevant to this screen
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
