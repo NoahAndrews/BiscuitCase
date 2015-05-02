@@ -75,7 +75,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         } else {
             layoutStateHolder.setLayoutType(LayoutType.SINGLE_PANE);
         }
-        savedInstanceState = null; //TODO FOR TESTING ONLY!! REMOVE LATER!!
         if(savedInstanceState == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             menuFragment = ShoppingFragment.newInstance(Section.MENU);
