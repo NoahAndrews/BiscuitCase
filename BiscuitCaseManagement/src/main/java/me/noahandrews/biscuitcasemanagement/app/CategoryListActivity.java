@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,6 +46,9 @@ public class CategoryListActivity extends AppCompatActivity
         dataSource = ItemsDataSource.HOST_INSTANCE;
         dataSource.open();
         categories = dataSource.getCategories();
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         RecyclerView list = (RecyclerView)findViewById(R.id.categoryList);
         list.setLayoutManager(new LinearLayoutManager(this));
