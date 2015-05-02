@@ -74,21 +74,7 @@ public class CategoryListActivity extends AppCompatActivity {
         });
     }
     
-    @Override
-    public void onNavigationDrawerItemSelected(int position) {
-        // launch a new activity
-    }
-    
-    public void onSectionAttached(int number) {
-        switch(number) {
-            case 1:
-                mTitle = getString(R.string.title_section1);
-                break;
-            case 2:
-                mTitle = getString(R.string.title_section2);
-                break;
-        }
-    }
+
     
     public void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();
