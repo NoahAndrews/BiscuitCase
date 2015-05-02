@@ -1,5 +1,7 @@
 package me.noahandrews.biscuitcaselibrary;
 
+import android.support.annotation.Nullable;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,11 +22,15 @@ public class Order implements Serializable {
         this.customerName = customerName;
     }
 
-    public Order(String customerName, ArrayList<Item> orderedItems, boolean submitOrder) {
+    public Order(String customerName, ArrayList<Item> orderedItems, boolean submitOrder, @Nullable ItemsDataSource dataSource) throws NullPointerException{
         this(customerName);
         this.orderedItems = orderedItems;
-        if(submitOrder)
-            submitOrder();
+        if(submitOrder) {
+            if(dataSource == null){
+                throw new NullPointerException();
+            }
+            submitOrder(dataSource);
+        }
     }
 
     public void addItemToOrder(Item item) {
@@ -58,19 +64,12 @@ public class Order implements Serializable {
     }
 
 
-    public void submitOrder() {
+    public void submitOrder(ItemsDataSource dataSource) {
         //Create a details entry for each ordered item
         for(Item item : orderedItems) {
             item = new Item(item); //Copy the item, since the original will be reset.
         }
         timestamp = new Date(System.currentTimeMillis());
-
-        //TODO make this section a function
-        ItemsDataSource dataSource;
-        dataSource = ItemsDataSource.INSTANCE;
-        if(!dataSource.isOpened()) {
-            dataSource.open();
-        }
 
         dataSource.addOrder(this);
         //TODO update quantity available of items in database

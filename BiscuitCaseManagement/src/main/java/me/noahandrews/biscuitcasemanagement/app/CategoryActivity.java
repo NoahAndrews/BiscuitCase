@@ -45,7 +45,7 @@ public class CategoryActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
-        dataSource = ItemsDataSource.INSTANCE;
+        dataSource = ItemsDataSource.HOST_INSTANCE;
         dataSource.open();
         categories = dataSource.getCategories();
 
