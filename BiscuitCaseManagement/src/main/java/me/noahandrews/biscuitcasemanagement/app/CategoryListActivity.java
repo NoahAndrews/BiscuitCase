@@ -1,6 +1,8 @@
 package me.noahandrews.biscuitcasemanagement.app;
 
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -57,8 +59,11 @@ public class CategoryListActivity extends AppCompatActivity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
+        Drawable plusIcon = getResources().getDrawable(R.drawable.fab_plus_icon); //must continue to use deprecated method for now. The replacement requires API 21+
+        Drawable plusIconTinted = DrawableCompat.wrap(plusIcon);
+        DrawableCompat.setTint(plusIconTinted, getResources().getColor(R.color.fab_material_black));
         ActionButton addCategoryButton = (ActionButton)findViewById(R.id.actionButton);
-        addCategoryButton.setImageResource(R.drawable.fab_plus_icon);
+        addCategoryButton.setImageDrawable(plusIconTinted);
         addCategoryButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 AlertDialog.Builder dialog = new AlertDialog.Builder(CategoryListActivity.this);
