@@ -7,16 +7,18 @@
     android:layout_height="match_parent"
     tools:context=".DatabaseActivity">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:tools="http://schemas.android.com/tools"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:context=".DatabaseActivity$PlaceholderFragment">
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".DatabaseActivity$PlaceholderFragment">
 
-        <include layout="@layout/toolbar"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:layout_margin="0dp"/>
+        <include
+            layout="@layout/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/categoryList"
@@ -41,4 +43,15 @@
             fab:button_color="@color/accent"/>
 
     </RelativeLayout>
+
+    <!--The Navigation drawer-->
+    <Listview
+        android:id="@+id/nav_drawer"
+        android:width="@dimen/navigation_drawer_width"
+        android:height="match_parent"
+        android:layout_gravity="left"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:backgroud="#111"/>
 </android.support.v4.widget.DrawerLayout>
