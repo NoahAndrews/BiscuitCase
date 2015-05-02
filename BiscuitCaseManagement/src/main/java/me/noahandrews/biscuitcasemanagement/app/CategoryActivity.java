@@ -21,6 +21,7 @@ import android.widget.EditText;
 import com.software.shell.fab.ActionButton;
 import me.noahandrews.biscuitcaselibrary.Category;
 import me.noahandrews.biscuitcaselibrary.ItemsDataSource;
+import me.noahandrews.biscuitcaselibrary.Section;
 
 import java.util.ArrayList;
 
@@ -74,6 +75,8 @@ public class CategoryActivity extends AppCompatActivity
                 dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        Category newCategory = new Category(nameField.getText().toString(), Section.MENU);
+                        dataSource.addCategory(newCategory);
                     }
                 });
             }
