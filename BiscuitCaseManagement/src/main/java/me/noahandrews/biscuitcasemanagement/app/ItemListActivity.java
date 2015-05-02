@@ -4,9 +4,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+import me.noahandrews.biscuitcaselibrary.Item;
 import me.noahandrews.biscuitcaselibrary.ItemsDataSource;
 
 import java.util.ArrayList;
@@ -19,14 +21,13 @@ public class ItemListActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private ListView mDrawerList;
 
-    private ArrayList<Category> mCategories;
+    private ArrayList<Item> mItems;
     private ItemsDataSource mDataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
-
 
     }
     
