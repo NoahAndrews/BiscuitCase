@@ -79,6 +79,8 @@ public class CategoryActivity extends AppCompatActivity
                         dataSource.addCategory(newCategory);
                     }
                 });
+                dialog.setNegativeButton("Cancel",null);
+                dialog.show();
             }
         });
     }
