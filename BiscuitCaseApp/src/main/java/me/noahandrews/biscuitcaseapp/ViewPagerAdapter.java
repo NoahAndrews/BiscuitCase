@@ -24,7 +24,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     public Fragment getItem(int position) {
         ItemsDataSource dataSource;
-        dataSource = ItemsDataSource.INSTANCE;
+        dataSource = ItemsDataSource.GUEST_INSTANCE;
         if(!dataSource.isOpened()) {
             dataSource.open();
         }
