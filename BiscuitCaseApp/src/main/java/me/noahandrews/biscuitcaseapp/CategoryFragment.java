@@ -8,6 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import me.noahandrews.biscuitcaselibrary.Category;
+import me.noahandrews.biscuitcaselibrary.Item;
+import me.noahandrews.biscuitcaselibrary.ItemListAdapter;
+import me.noahandrews.biscuitcaselibrary.ItemsDataSource;
 
 import java.util.ArrayList;
 
@@ -19,8 +23,8 @@ public class CategoryFragment extends Fragment {
     public static CategoryFragment newInstance(Category category) {
         CategoryFragment fragment = new CategoryFragment();
         Bundle args = new Bundle();
-        MenuItemsDataSource dataSource;
-        dataSource = MenuItemsDataSource.INSTANCE;
+        ItemsDataSource dataSource;
+        dataSource = ItemsDataSource.INSTANCE;
         if(!dataSource.isOpened()) {
             dataSource.open();
         }

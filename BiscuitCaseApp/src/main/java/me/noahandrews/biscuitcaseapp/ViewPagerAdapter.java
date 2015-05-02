@@ -3,7 +3,8 @@ package me.noahandrews.biscuitcaseapp;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
+import me.noahandrews.biscuitcaselibrary.Category;
+import me.noahandrews.biscuitcaselibrary.ItemsDataSource;
 
 import java.util.ArrayList;
 
@@ -22,8 +23,8 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     }
 
     public Fragment getItem(int position) {
-        MenuItemsDataSource dataSource;
-        dataSource = MenuItemsDataSource.INSTANCE;
+        ItemsDataSource dataSource;
+        dataSource = ItemsDataSource.INSTANCE;
         if(!dataSource.isOpened()) {
             dataSource.open();
         }

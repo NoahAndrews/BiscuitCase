@@ -15,16 +15,18 @@ import android.view.View;
 import android.widget.*;
 import com.facebook.stetho.Stetho;
 import com.software.shell.fab.ActionButton;
+import me.noahandrews.biscuitcaselibrary.*;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, ShoppingFragment.OnFragmentInteractionListener,
-        CheckoutFragment.OnFragmentInteractionListener, OrderResetListener, ItemListAdapter.OnItemInteractionListener {
+        CheckoutFragment.OnFragmentInteractionListener, OrderResetHelper.OrderResetListener, ItemListAdapter.OnItemInteractionListener {
+
 
     public static final String WARNING_TAG = "BiscuitCaseWARNING";
     public static final String DEBUG_TAG = "BiscuitCaseDEBUG";
 
     final LayoutStateHolder layoutStateHolder = new LayoutStateHolder();
     Order currentOrder;
-    MenuItemsDataSource dataSource;
+    ItemsDataSource dataSource;
     ShoppingFragment menuFragment;
     ShoppingFragment storeFragment;
     CheckoutFragment checkoutFragment;
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sectionChooser.setAdapter(spinnerAdapter);
 
-        dataSource = MenuItemsDataSource.INSTANCE;
+        dataSource = ItemsDataSource.INSTANCE;
         dataSource.open();
 
         ItemListAdapter.addListener(this);

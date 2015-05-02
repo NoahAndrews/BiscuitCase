@@ -1,17 +1,29 @@
 package me.noahandrews.biscuitcasemanagement.app;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
+import android.widget.EditText;
+import com.software.shell.fab.ActionButton;
+import me.noahandrews.biscuitcaselibrary.Category;
+import me.noahandrews.biscuitcaselibrary.ItemsDataSource;
+import me.noahandrews.biscuitcaselibrary.Section;
+
+import java.util.ArrayList;
 
 
 public class CategoryActivity extends AppCompatActivity
@@ -26,11 +38,20 @@ public class CategoryActivity extends AppCompatActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+    ArrayList<Category> categories;
+    ItemsDataSource dataSource;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
+        dataSource = ItemsDataSource.INSTANCE;
+        dataSource.open();
+        categories = dataSource.getCategories();
+
+        RecyclerView list = (RecyclerView)findViewById(R.id.categoryList);
+        list.setLayoutManager(new LinearLayoutManager(this));
+        list.setAdapter(new CategoryListAdapter(categories));
         
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -40,15 +61,33 @@ public class CategoryActivity extends AppCompatActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        ActionButton addCategoryButton = (ActionButton)findViewById(R.id.actionButton);
+        addCategoryButton.setImageResource(R.drawable.fab_plus_icon);
+        addCategoryButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                AlertDialog.Builder dialog = new AlertDialog.Builder(CategoryActivity.this);
+                dialog.setTitle("Add new category");
+                dialog.setMessage("Enter a name.");
+                final EditText nameField = new EditText(CategoryActivity.this);
+                nameField.setInputType(InputType.TYPE_CLASS_TEXT);
+                dialog.setView(nameField);
+                dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Category newCategory = new Category(nameField.getText().toString(), Section.MENU);
+                        dataSource.addCategory(newCategory);
+                    }
+                });
+                dialog.setNegativeButton("Cancel",null);
+                dialog.show();
+            }
+        });
     }
     
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
+        // launch a new activity
     }
     
     public void onSectionAttached(int number) {
@@ -100,45 +139,4 @@ public class CategoryActivity extends AppCompatActivity
         
         return super.onOptionsItemSelected(item);
     }
-    
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-        
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-        
-        public PlaceholderFragment() {
-        }
-        
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_category, container, false);
-            return rootView;
-        }
-        
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            ((CategoryActivity) activity).onSectionAttached(
-                    getArguments().getInt(ARG_SECTION_NUMBER));
-        }
-    }
-    
 }

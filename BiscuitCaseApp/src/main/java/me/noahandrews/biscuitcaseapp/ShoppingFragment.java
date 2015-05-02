@@ -9,6 +9,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import me.noahandrews.biscuitcaselibrary.Category;
+import me.noahandrews.biscuitcaselibrary.ItemsDataSource;
+import me.noahandrews.biscuitcaselibrary.Section;
 
 import java.util.ArrayList;
 
@@ -16,7 +19,7 @@ public class ShoppingFragment extends Fragment {
     private ViewPager pager;
     private ViewPagerAdapter adapter;
     private SlidingTabLayout tabs;
-    private MenuItemsDataSource dataSource;
+    private ItemsDataSource dataSource;
     private ArrayList<Category> categories;
     Section section;
 
@@ -73,7 +76,7 @@ public class ShoppingFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_shopping, container, false);
 
-        dataSource = MenuItemsDataSource.INSTANCE;
+        dataSource = ItemsDataSource.INSTANCE;
         categories = dataSource.getCategories(section);
 
         ArrayList<String> tabNames = new ArrayList<>();
