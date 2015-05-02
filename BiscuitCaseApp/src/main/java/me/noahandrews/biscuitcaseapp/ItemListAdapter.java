@@ -1,4 +1,4 @@
-package me.noahandrews.biscuitcaselibrary;
+package me.noahandrews.biscuitcaseapp;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,6 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import me.noahandrews.biscuitcaselibrary.Constants;
+import me.noahandrews.biscuitcaselibrary.Item;
+import me.noahandrews.biscuitcaselibrary.MyApplication;
+import me.noahandrews.biscuitcaselibrary.OrderResetHelper;
 
 import java.util.ArrayList;
 
@@ -41,7 +45,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemHo
 
     @Override
     public ItemHolder onCreateViewHolder(ViewGroup parent, int position) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(me.noahandrews.biscuitcaselibrary.R.layout.item, parent, false);
         return new ItemHolder(view);
     }
 
@@ -70,18 +74,18 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemHo
 
         public ItemHolder(View itemView) {
             super(itemView);
-            increaseQuantityButton = (Button) itemView.findViewById(R.id.item_increase);
+            increaseQuantityButton = (Button) itemView.findViewById(me.noahandrews.biscuitcaselibrary.R.id.item_increase);
             increaseQuantityButton.setOnClickListener(this);
-            decreaseQuantityButton = (Button) itemView.findViewById(R.id.item_decrease);
+            decreaseQuantityButton = (Button) itemView.findViewById(me.noahandrews.biscuitcaselibrary.R.id.item_decrease);
             decreaseQuantityButton.setOnClickListener(this);
             if(addEraseButton) {
-                removeButton = (Button) itemView.findViewById(R.id.remove_button);
+                removeButton = (Button) itemView.findViewById(me.noahandrews.biscuitcaselibrary.R.id.remove_button);
                 removeButton.setOnClickListener(this);
                 removeButton.setVisibility(View.VISIBLE);
             }
-            nameView = (TextView) itemView.findViewById(R.id.item_name);
-            priceView = (TextView) itemView.findViewById(R.id.item_price);
-            quantityView = (TextView) itemView.findViewById(R.id.quantity);
+            nameView = (TextView) itemView.findViewById(me.noahandrews.biscuitcaselibrary.R.id.item_name);
+            priceView = (TextView) itemView.findViewById(me.noahandrews.biscuitcaselibrary.R.id.item_price);
+            quantityView = (TextView) itemView.findViewById(me.noahandrews.biscuitcaselibrary.R.id.quantity);
             quantityView.setOnClickListener(this);
             OrderResetHelper.addListener(this); //This allows us to respond to order reset events
         }
@@ -97,7 +101,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemHo
         public void onClick(View view) {
             Log.d("DEBUG", "Item clicked!");
             int id = view.getId();
-            if(id == R.id.item_increase){
+            if(id == me.noahandrews.biscuitcaselibrary.R.id.item_increase){
                 try {
                     item.increaseQuantityDesired();
                 } catch(Exception e) {
@@ -105,14 +109,14 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemHo
                 }
                 quantityView.setText(String.valueOf(item.getQuantityDesired()));
                 onItemInteraction(item, getAdapterPosition());
-            } else if(id == R.id.item_decrease){
+            } else if(id == me.noahandrews.biscuitcaselibrary.R.id.item_decrease){
                 item.decreaseQuantityDesired();
                 quantityView.setText(String.valueOf(item.getQuantityDesired()));
                 onItemInteraction(item, getAdapterPosition());
-            } else if(id == R.id.remove_button){
+            } else if(id == me.noahandrews.biscuitcaselibrary.R.id.remove_button){
                 item.setQuantityDesired(0);
                 onItemInteraction(item, getAdapterPosition());
-            } else if(id == R.id.quantity){
+            } else if(id == me.noahandrews.biscuitcaselibrary.R.id.quantity){
                 AlertDialog.Builder quantityPrompt = new AlertDialog.Builder(context);
                 quantityPrompt.setTitle("Quantity");
                 quantityPrompt.setMessage("How many items?");
