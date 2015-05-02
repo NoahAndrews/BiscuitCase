@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sectionChooser.setAdapter(spinnerAdapter);
 
-        dataSource = ItemsDataSource.INSTANCE;
+        dataSource = ItemsDataSource.GUEST_INSTANCE;
         dataSource.open();
 
         ItemListAdapter.addListener(this);
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                                                           name = CheckoutFragment.nameField.getText().toString();
                                                           if(name.length() > 0) {
                                                               currentOrder.setCustomerName(name);
-                                                              currentOrder.submitOrder();
+                                                              currentOrder.submitOrder(dataSource);
                                                               Toast.makeText(MyApplication.getAppContext(), "Order submitted.", Toast.LENGTH_LONG).show();
                                                               layoutStateHolder.setLayoutState(LayoutState.SINGLE_PANE_SHOPPING);
                                                           } else {
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                                                           name = CheckoutFragment.nameField.getText().toString();
                                                           if(name.length() > 0) {
                                                               currentOrder.setCustomerName(name);
-                                                              currentOrder.submitOrder();
+                                                              currentOrder.submitOrder(dataSource);
                                                               layoutStateHolder.setLayoutState(LayoutState.DUAL_PANE_COLLAPSED);
                                                               Toast.makeText(MyApplication.getAppContext(), "Order submitted.", Toast.LENGTH_SHORT).show();
                                                           } else {

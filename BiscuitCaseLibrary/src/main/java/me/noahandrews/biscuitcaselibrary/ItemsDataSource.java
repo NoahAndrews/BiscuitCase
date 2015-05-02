@@ -1,6 +1,7 @@
 package me.noahandrews.biscuitcaselibrary;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,7 +14,27 @@ import java.util.Iterator;
 
 
 public enum ItemsDataSource {
-    INSTANCE;
+    HOST_INSTANCE(){
+        Context initialize(){
+            return MyApplication.getAppContext();
+        }
+    },
+    GUEST_INSTANCE(){
+        Context initialize(){
+            try{
+              return MyApplication.getAppContext().createPackageContext("me.noahandrews.biscuitcasemanagement.app", Context.CONTEXT_INCLUDE_CODE);
+            } catch (Exception e){
+                throw new IllegalStateException();
+            }
+        }
+    };
+
+    ItemsDataSource(){
+        this.context = initialize();
+        helper = new SQLHelper();
+    }
+
+    abstract Context initialize() throws IllegalStateException;
 
     public static final String[] MENU_CATEGORIES_SEED = {"Appetizers", "Entrees", "Beverages", "Soups and Salads", "Sides", "Desserts"};
     public static final String DB_NAME = "menu.db";
@@ -49,14 +70,11 @@ public enum ItemsDataSource {
 
     SQLHelper helper;
     SQLiteDatabase database;
+    Context context;
     private boolean isOpened = false;
     private String[] readableColumnsItemsTable = {COLUMN_ITEM_ID, COLUMN_ITEM_NAME, COLUMN_ITEM_PRICE, COLUMN_ITEM_CATEGORY_ID, COLUMN_ITEM_IS_LIMITED, COLUMN_ITEM_QUANTITY};
     private String[] readableColumnsCategoriesTable = {COLUMN_CATEGORY_ID, COLUMN_CATEGORY_NAME, COLUMN_CATEGORY_SECTION};
     private ArrayList<Category> categories;
-
-    ItemsDataSource() {
-        helper = new SQLHelper();
-    }
 
     public static String toCategoryName(String string) {
         return string.replace(' ', '_');
@@ -263,7 +281,7 @@ public enum ItemsDataSource {
     public class SQLHelper extends SQLiteOpenHelper {
 
         public SQLHelper() {
-            super(MyApplication.getAppContext(), DB_NAME, null, DB_VERSION);
+            super(context, DB_NAME, null, DB_VERSION);
         }
 
         @Override

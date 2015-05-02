@@ -76,7 +76,7 @@ public class ShoppingFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_shopping, container, false);
 
-        dataSource = ItemsDataSource.INSTANCE;
+        dataSource = ItemsDataSource.GUEST_INSTANCE;
         categories = dataSource.getCategories(section);
 
         ArrayList<String> tabNames = new ArrayList<>();

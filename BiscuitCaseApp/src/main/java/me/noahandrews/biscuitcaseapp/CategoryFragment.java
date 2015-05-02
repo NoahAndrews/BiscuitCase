@@ -24,7 +24,7 @@ public class CategoryFragment extends Fragment {
         CategoryFragment fragment = new CategoryFragment();
         Bundle args = new Bundle();
         ItemsDataSource dataSource;
-        dataSource = ItemsDataSource.INSTANCE;
+        dataSource = ItemsDataSource.GUEST_INSTANCE;
         if(!dataSource.isOpened()) {
             dataSource.open();
         }
