@@ -61,7 +61,8 @@ public class ItemListActivity extends AppCompatActivity implements NewItemDialog
         mDrawerList.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.NavSections)));
 
         mTitle = mDrawerTitle = getTitle();
-        mTitle = mCategory.getName();
+        mTitle = mDataSource.toDisplayName(mCategory.getName());
+        getSupportActionBar().setTitle(mTitle);
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
             public void onDrawerClosed(View drawerView) {
