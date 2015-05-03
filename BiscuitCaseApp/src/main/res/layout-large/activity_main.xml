@@ -19,7 +19,7 @@
         <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/section_chooser"></Spinner> //TODO style the spinner
+            android:id="@+id/section_chooser"></Spinner>
     </android.support.v7.widget.Toolbar>
 
     <!--app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->

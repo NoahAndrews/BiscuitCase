@@ -5,6 +5,7 @@
                                    android:layout_height="wrap_content"
                                    android:minHeight="?attr/actionBarSize"
                                    android:background="@color/primary"
-                                   android:layout_alignParentTop="true">
+                                   android:layout_alignParentTop="true"
+                                   android:theme="@style/MyToolbarTheme">
 
 </android.support.v7.widget.Toolbar>
