@@ -49,7 +49,12 @@ public class NewItemDialogFragment extends DialogFragment {
                 //send newItem to activity
             }
         });
-        builder.setNegativeButton("Cancel", null);
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                NewItemDialogFragment.this.getDialog().cancel();
+            }
+        });
         return builder.create();
     }
 }
