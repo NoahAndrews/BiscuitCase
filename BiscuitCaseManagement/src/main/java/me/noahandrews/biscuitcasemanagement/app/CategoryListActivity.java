@@ -15,15 +15,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ListView;
+import android.widget.*;
 import com.software.shell.fab.ActionButton;
 import me.noahandrews.biscuitcaselibrary.Category;
 import me.noahandrews.biscuitcaselibrary.ItemsDataSource;
+import me.noahandrews.biscuitcaselibrary.MyApplication;
 import me.noahandrews.biscuitcaselibrary.Section;
 
 import java.util.ArrayList;
@@ -90,26 +90,49 @@ public class CategoryListActivity extends AppCompatActivity implements CategoryL
         DrawableCompat.setTint(plusIconTinted, getResources().getColor(R.color.fab_material_black));
         ActionButton addCategoryButton = (ActionButton)findViewById(R.id.actionButton);
         addCategoryButton.setImageDrawable(plusIconTinted);
-        addCategoryButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                AlertDialog.Builder dialog = new AlertDialog.Builder(CategoryListActivity.this);
-                dialog.setTitle("Add new category");
-                dialog.setMessage("Enter a name.");
-                final EditText nameField = new EditText(CategoryListActivity.this);
-                nameField.setInputType(InputType.TYPE_CLASS_TEXT);
-                dialog.setView(nameField);
-                dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Category newCategory = new Category(nameField.getText().toString(), Section.MENU);
-                        mDataSource.addCategory(newCategory);
-                    }
-                });
-                dialog.setNegativeButton("Cancel",null);
-                dialog.show();
-            }
-        });
+        addCategoryButton.setOnClickListener(fabListener);
     }
+
+    View.OnClickListener fabListener = new View.OnClickListener(){
+        ArrayAdapter<CharSequence> spinnerAdapter;
+        Section section;
+        class SpinnerListener implements AdapterView.OnItemSelectedListener {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String sectionString = (String)parent.getItemAtPosition(position);
+                section = Section.forString(sectionString);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+        }
+
+        public void onClick(View v){
+            AlertDialog.Builder builder = new AlertDialog.Builder(CategoryListActivity.this);
+            builder.setTitle("Add new category");
+            LayoutInflater inflater = getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.dialog_new_category, null);
+            builder.setView(dialogView);
+            Spinner sectionSpinner = (Spinner)dialogView.findViewById(R.id.sectionSpinner);
+            SpinnerListener spinnerListener = new SpinnerListener();
+            sectionSpinner.setOnItemSelectedListener(spinnerListener);
+            spinnerAdapter = ArrayAdapter.createFromResource(MyApplication.getAppContext(), R.array.sections, android.R.layout.simple_spinner_item);
+            spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            sectionSpinner.setAdapter(spinnerAdapter);
+
+            final EditText nameField = (EditText)dialogView.findViewById(R.id.nameField);
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Category newCategory = new Category(nameField.getText().toString(), section);
+                    mDataSource.addCategory(newCategory);
+                }
+            });
+            builder.setNegativeButton("Cancel", null);
+            builder.show();
+        }
+    };
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu){
