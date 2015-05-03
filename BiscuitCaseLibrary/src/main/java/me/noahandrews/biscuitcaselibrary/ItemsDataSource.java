@@ -225,7 +225,7 @@ public enum ItemsDataSource {
     }
 
 
-    public ArrayList getItems(Category category) {
+    public ArrayList<Item> getItems(Category category) {
         ArrayList items = new ArrayList();
 
         if(database == null) Log.w("WARNING", "database object is null.");
