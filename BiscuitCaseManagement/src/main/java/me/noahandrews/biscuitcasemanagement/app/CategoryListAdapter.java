@@ -57,7 +57,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         @Override
         public boolean onLongClick(View v) {
             //TODO Launch dialog box to allow user to rename the category
-            return false;
+            return true;
         }
 
         @Override
