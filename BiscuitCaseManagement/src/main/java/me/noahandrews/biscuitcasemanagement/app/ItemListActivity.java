@@ -87,22 +87,7 @@ public class ItemListActivity extends AppCompatActivity {
         addCategoryButton.setImageDrawable(plusIconTinted);
         addCategoryButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                AlertDialog.Builder dialog = new AlertDialog.Builder(ItemListActivity.this);
-                dialog.setTitle("Add new item");
-                dialog.setMessage("Enter a name.");
-                final EditText nameField = new EditText(ItemListActivity.this);
-                nameField.setInputType(InputType.TYPE_CLASS_TEXT);
-                dialog.setView(nameField);
-                dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Item newItem = new Item(nameField.getText().toString());
-                        mDataSource.addItem(newItem);
-                        ItemListActivity.addItem(newItem);
-                    }
-                });
-                dialog.setNegativeButton("Cancel", null);
-                dialog.show();
+
             }
         });
     }
