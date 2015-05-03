@@ -38,6 +38,8 @@ public class ItemListActivity extends AppCompatActivity implements NewItemDialog
     private Category mCategory;
     private static ArrayList<Item> mItems;
     private ItemsDataSource mDataSource;
+    private RecyclerView mList;
+    private ItemListAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,9 +83,10 @@ public class ItemListActivity extends AppCompatActivity implements NewItemDialog
 
         mItems = mDataSource.getItems(mCategory);
 
-        RecyclerView list = (RecyclerView)findViewById(R.id.itemList);
-        list.setLayoutManager(new LinearLayoutManager(this));
-        list.setAdapter(new ItemListAdapter(mItems));
+        mList = (RecyclerView)findViewById(R.id.itemList);
+        mList.setLayoutManager(new LinearLayoutManager(this));
+        mAdapter = new ItemListAdapter(mItems);
+        mList.setAdapter(mAdapter);
 
         Drawable plusIcon = getResources().getDrawable(R.drawable.fab_plus_icon); //must continue to use deprecated method for now. The replacement requires API 21+
         Drawable plusIconTinted = DrawableCompat.wrap(plusIcon);
@@ -128,7 +131,8 @@ public class ItemListActivity extends AppCompatActivity implements NewItemDialog
     @Override
     public void onDialogPositiveClick(Item newItem) {
         newItem.setCategory(mCategory);
-        Log.d(Constants.DEBUG_TAG, "new item added to DB");
+        mItems.add(newItem);
+        mAdapter.notifyDataSetChanged();
         mDataSource.addItem(newItem);
     }
 }
