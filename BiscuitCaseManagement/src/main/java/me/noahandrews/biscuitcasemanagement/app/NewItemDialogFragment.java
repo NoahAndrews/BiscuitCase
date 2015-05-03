@@ -16,7 +16,7 @@ import me.noahandrews.biscuitcaselibrary.Item;
 public class NewItemDialogFragment extends DialogFragment {
 
     public interface NewItemDialogListener {
-        public void onDialogPositiveClick(Item newItem);
+        void onDialogPositiveClick(Item newItem);
     }
 
     NewItemDialogListener mListener;
@@ -53,7 +53,13 @@ public class NewItemDialogFragment extends DialogFragment {
                 String name = nameField.getText().toString();
                 double price = Double.parseDouble(priceField.getText().toString());
                 boolean limitedQuantity = quantityLimitedCheckbox.isChecked();
-                int quantity = Integer.parseInt(quantityAvailableField.getText().toString());
+                int quantity;
+                String quantityString = quantityAvailableField.getText().toString();
+                if(quantityString.equals("")){
+                    quantity = 0;
+                } else {
+                    quantity = Integer.parseInt(quantityString);
+                }
                 Item newItem = new Item(name, price, null, limitedQuantity, quantity);
                 mListener.onDialogPositiveClick(newItem);
             }
