@@ -15,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,10 +23,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import com.software.shell.fab.ActionButton;
-import me.noahandrews.biscuitcaselibrary.Category;
-import me.noahandrews.biscuitcaselibrary.Item;
-import me.noahandrews.biscuitcaselibrary.ItemsDataSource;
-import me.noahandrews.biscuitcaselibrary.Section;
+import me.noahandrews.biscuitcaselibrary.*;
 
 import java.util.ArrayList;
 
@@ -61,6 +59,7 @@ public class ItemListActivity extends AppCompatActivity implements NewItemDialog
         mDrawerList.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.NavSections)));
 
         mTitle = mDrawerTitle = getTitle();
+        mTitle = mCategory.getName();
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
             public void onDrawerClosed(View drawerView) {
@@ -129,6 +128,7 @@ public class ItemListActivity extends AppCompatActivity implements NewItemDialog
     @Override
     public void onDialogPositiveClick(Item newItem) {
         newItem.setCategory(mCategory);
+        Log.d(Constants.DEBUG_TAG, "new item added to DB");
         mDataSource.addItem(newItem);
     }
 }
