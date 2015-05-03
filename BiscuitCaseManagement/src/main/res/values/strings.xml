@@ -1,11 +1,12 @@
 <resources>
     <string name="app_name">BiscuitCaseManagement</string>
 
-    <string name="title_section1">Inventory</string>
-    <string name="title_section2">Orders</string>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="title_activity_item_list">ItemListActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_new_item">NewItemActivity</string>
 </resources>

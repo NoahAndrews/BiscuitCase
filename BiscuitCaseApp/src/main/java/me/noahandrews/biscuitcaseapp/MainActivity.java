@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             storeFragment = ShoppingFragment.newInstance(Section.STORE);
             transaction.add(R.id.shopping_fragment_container, menuFragment);
             transaction.addToBackStack(null);
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             transaction.commit();
         } else {
             if(currentSection == Section.MENU){
@@ -144,11 +145,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         if(currentSection == Section.MENU && fm.findFragmentById(R.id.shopping_fragment_container) == storeFragment){
             FragmentTransaction ft = fm.beginTransaction();
             ft.replace(R.id.shopping_fragment_container,menuFragment);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             ft.commit();
         }
         else if(currentSection == Section.STORE && fm.findFragmentById(R.id.shopping_fragment_container) == menuFragment) {
             FragmentTransaction ft = fm.beginTransaction();
             ft.replace(R.id.shopping_fragment_container,storeFragment);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             ft.commit();
         }
     }
@@ -202,6 +205,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     }
                 });
                 confirmation.show();
+                return true;
+            case R.id.action_refresh:
+                this.recreate();
                 return true;
 
         }
@@ -316,7 +322,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     this.layoutState = LayoutState.DUAL_PANE_EXPANDED;
                     break;
             }
-            ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             ft.addToBackStack(null);
             ft.commit();
         }

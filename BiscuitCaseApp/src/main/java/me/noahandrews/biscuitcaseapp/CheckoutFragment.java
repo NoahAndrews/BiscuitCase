@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import me.noahandrews.biscuitcaselibrary.Item;
-import me.noahandrews.biscuitcaselibrary.ItemListAdapter;
 
 import java.util.ArrayList;
 

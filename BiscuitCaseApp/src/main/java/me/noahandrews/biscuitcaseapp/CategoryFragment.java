@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import me.noahandrews.biscuitcaselibrary.Category;
 import me.noahandrews.biscuitcaselibrary.Item;
-import me.noahandrews.biscuitcaselibrary.ItemListAdapter;
 import me.noahandrews.biscuitcaselibrary.ItemsDataSource;
 
 import java.util.ArrayList;
