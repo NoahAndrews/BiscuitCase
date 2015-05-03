@@ -1,7 +1,10 @@
 package me.noahandrews.biscuitcasemanagement.app;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
@@ -27,7 +30,7 @@ import me.noahandrews.biscuitcaselibrary.Section;
 import java.util.ArrayList;
 
 
-public class ItemListActivity extends AppCompatActivity {
+public class ItemListActivity extends AppCompatActivity implements NewItemDialogFragment.NewItemDialogListener {
     private CharSequence mTitle;
     private CharSequence mDrawerTitle;
     private DrawerLayout mDrawerLayout;
@@ -42,6 +45,9 @@ public class ItemListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
+
+        Intent intent = getIntent();
+        mCategory = (Category)intent.getSerializableExtra(CategoryListActivity.EXTRA_CATEGORY);
 
         mDataSource = ItemsDataSource.HOST_INSTANCE;
         if(!mDataSource.isOpened()){
@@ -87,7 +93,9 @@ public class ItemListActivity extends AppCompatActivity {
         addCategoryButton.setImageDrawable(plusIconTinted);
         addCategoryButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                NewItemDialogFragment dialog = new NewItemDialogFragment();
+                FragmentManager fm = getSupportFragmentManager();
+                dialog.show(fm, null);
             }
         });
     }
@@ -116,5 +124,11 @@ public class ItemListActivity extends AppCompatActivity {
         }
         
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDialogPositiveClick(Item newItem) {
+        newItem.setCategory(mCategory);
+        mDataSource.addItem(newItem);
     }
 }

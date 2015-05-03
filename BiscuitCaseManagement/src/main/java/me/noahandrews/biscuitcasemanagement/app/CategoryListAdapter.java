@@ -13,6 +13,13 @@ import me.noahandrews.biscuitcaselibrary.Constants;
 import java.util.ArrayList;
 
 public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapter.CategoryHolder> {
+
+    public interface CategoryListAdapterListener {
+        void onCategorySelected(Category category);
+    }
+
+    CategoryListAdapterListener mListener;
+
     private ArrayList<Category> categories;
 
     public CategoryListAdapter(ArrayList<Category> categories){
@@ -33,6 +40,10 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
     @Override
     public int getItemCount() {
         return categories.size();
+    }
+
+    public void setCategoryListAdapterListener(CategoryListAdapterListener listener){
+        mListener = listener;
     }
 
     public class CategoryHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
@@ -62,7 +73,16 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
         @Override
         public void onClick(View v) {
-            Log.d(Constants.DEBUG_TAG, v + " clicked.");
+            if(v.equals(removeButton)){
+                //TODO remove the category
+                Log.i("BCM", "Removal button pressed");
+            }
+            else{
+                Log.i("BCM", "another part of the category was pressed.");
+                if(mListener != null) {
+                    mListener.onCategorySelected(category);
+                }
+            }
         }
     }
 }

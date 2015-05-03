@@ -1,5 +1,6 @@
 package me.noahandrews.biscuitcasemanagement.app;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -13,6 +14,14 @@ import android.widget.TextView;
 import me.noahandrews.biscuitcaselibrary.Item;
 
 public class NewItemDialogFragment extends DialogFragment {
+
+    public interface NewItemDialogListener {
+        public void onDialogPositiveClick(Item newItem);
+    }
+
+    NewItemDialogListener mListener;
+
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -46,7 +55,7 @@ public class NewItemDialogFragment extends DialogFragment {
                 boolean limitedQuantity = quantityLimitedCheckbox.isChecked();
                 int quantity = Integer.parseInt(quantityAvailableField.getText().toString());
                 Item newItem = new Item(name, price, null, limitedQuantity, quantity);
-                //send newItem to activity
+                mListener.onDialogPositiveClick(newItem);
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -56,5 +65,16 @@ public class NewItemDialogFragment extends DialogFragment {
             }
         });
         return builder.create();
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mListener = (NewItemDialogListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement NewItemDialogListener");
+        }
     }
 }

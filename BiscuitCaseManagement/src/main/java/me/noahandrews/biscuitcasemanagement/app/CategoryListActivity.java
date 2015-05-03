@@ -1,6 +1,8 @@
 package me.noahandrews.biscuitcasemanagement.app;
 
+import android.util.Log;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -27,7 +29,8 @@ import me.noahandrews.biscuitcaselibrary.Section;
 import java.util.ArrayList;
 
 
-public class CategoryListActivity extends AppCompatActivity {
+public class CategoryListActivity extends AppCompatActivity implements CategoryListAdapter.CategoryListAdapterListener {
+    public static final String EXTRA_CATEGORY = "me.noahandrews.biscuitcaseapp.app.CATEGORY";
     private CharSequence mTitle;
     private CharSequence mDrawerTitle;
     private DrawerLayout mDrawerLayout;
@@ -78,7 +81,9 @@ public class CategoryListActivity extends AppCompatActivity {
 
         RecyclerView list = (RecyclerView)findViewById(R.id.categoryList);
         list.setLayoutManager(new LinearLayoutManager(this));
-        list.setAdapter(new CategoryListAdapter(mCategories));
+        CategoryListAdapter adapter = new CategoryListAdapter(mCategories);
+        list.setAdapter(adapter);
+        adapter.setCategoryListAdapterListener(this);
 
         Drawable plusIcon = getResources().getDrawable(R.drawable.fab_plus_icon); //must continue to use deprecated method for now. The replacement requires API 21+
         Drawable plusIconTinted = DrawableCompat.wrap(plusIcon);
@@ -151,5 +156,13 @@ public class CategoryListActivity extends AppCompatActivity {
         }
         
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCategorySelected(Category category) {
+        Intent intent = new Intent(this, ItemListActivity.class);
+        intent.putExtra(EXTRA_CATEGORY, category);
+        startActivity(intent);
+        Log.i("BCM", "activity started");
     }
 }
