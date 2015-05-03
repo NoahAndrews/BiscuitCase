@@ -122,7 +122,7 @@ public enum ItemsDataSource {
         ContentValues newItem = new ContentValues();
         newItem.put(COLUMN_ITEM_NAME, item.getName());
         newItem.put(COLUMN_ITEM_PRICE, item.getPrice());
-        newItem.put(COLUMN_ITEM_CATEGORY_ID, item.getCategory().getName());
+        newItem.put(COLUMN_ITEM_CATEGORY_ID, item.getCategory().getId());
         newItem.put(COLUMN_ITEM_IS_LIMITED, item.isQuantityLimited() ? 1 : 0);
         newItem.put(COLUMN_ITEM_QUANTITY, item.getQuantityAvailable());
         try {
