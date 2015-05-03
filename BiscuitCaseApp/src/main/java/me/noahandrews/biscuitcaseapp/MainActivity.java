@@ -207,6 +207,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 });
                 confirmation.show();
                 return true;
+            case R.id.action_refresh:
+                this.recreate();
+                return true;
 
         }
         return super.onOptionsItemSelected(item);
