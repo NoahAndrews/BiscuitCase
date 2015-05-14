@@ -4,6 +4,8 @@ This repository contains two apps for a college project which are centered aroun
 One app allows store employees to manage inventory and view placed orders, the other allows customers to purchase items. The apps access an SQLite database on the device. Obviously, if this app were for a real restaurant, the database would be located on a server, and a REST API would be implemented.
 
 # Screenshots
-![BiscuitCase screenshot](http://i.imgur.com/zVfksi4.png)!
 ![BiscuitCase screenshot](http://i.imgur.com/zVfksi4.png)
-![BiscuitCase screenshot](http://i.imgur.com/zVfksi4.png)
+![BiscuitCase screenshot](http://i.imgur.com/xqaROsA.png)
+![BiscuitCase screenshot](http://i.imgur.com/S0YkSUG.png)
+![BiscuitCase screenshot](http://i.imgur.com/zbT6obr.png)
+![BiscuitCase screenshot](http://i.imgur.com/hikmXdb.png)
