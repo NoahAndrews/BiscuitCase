@@ -1,3 +1,3 @@
-BiscuitCase is a fictional restaurant that sells both hot food and non-perishable items.
-For a school project, I am writing two apps based around an on-device SQLite database. One app will allow customers to purchase things listed in the database, and the other will allow the database to be managed.
-This project is an offshoot of my earlier HappyBurger project. 
+This repository contains two apps for a college project which are centered around a fictional restaurant called BiscuitCase, which sells both hot food and non-perishable items.
+
+One app allows store employees to manage inventory and view placed orders, the other allows customers to purchase items. The apps access an SQLite database on the device. Obviously, if this app were for a real restaurant, the database would be located on a server, and a REST API would be implemented.
